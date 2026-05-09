@@ -1,19 +1,15 @@
 import os
 import requests
 import streamlit as st
-from dotenv import load_dotenv, dotenv_values
 
 # ---------------------------------------------------------------------------
 # Config & Auth
 # ---------------------------------------------------------------------------
 
-load_dotenv(override=True)
-env_vars = dotenv_values(".env")
-
-BASE_URL = env_vars.get("API_BASE_URL") or os.environ.get("API_BASE_URL", "http://localhost:8000")
-FIREBASE_API_KEY = env_vars.get("FIREBASE_API_KEY") or os.environ.get("FIREBASE_API_KEY", "")
-FIREBASE_EMAIL = env_vars.get("FIREBASE_EMAIL") or os.environ.get("FIREBASE_EMAIL", "")
-FIREBASE_PASSWORD = env_vars.get("FIREBASE_PASSWORD") or os.environ.get("FIREBASE_PASSWORD", "")
+BASE_URL = st.secrets.get("API_BASE_URL", os.environ.get("API_BASE_URL", "http://localhost:8000"))
+FIREBASE_API_KEY = st.secrets.get("FIREBASE_API_KEY", os.environ.get("FIREBASE_API_KEY", ""))
+FIREBASE_EMAIL = st.secrets.get("FIREBASE_EMAIL", os.environ.get("FIREBASE_EMAIL", ""))
+FIREBASE_PASSWORD = st.secrets.get("FIREBASE_PASSWORD", os.environ.get("FIREBASE_PASSWORD", ""))
 
 
 @st.cache_data(ttl=3600)

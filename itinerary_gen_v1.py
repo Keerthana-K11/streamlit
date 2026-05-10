@@ -575,7 +575,9 @@ def step_generate(token):
             data = result.get("data", result)
             st.session_state.itinerary = data
             # Extract metrics from root level or from data
-            st.session_state.generation_metrics = result.get("generation_metrics") or data.get("generation_metrics")
+            st.session_state.generation_metrics = result.get("generation_metrics")
+            if not st.session_state.generation_metrics and isinstance(data, dict):
+                st.session_state.generation_metrics = data.get("generation_metrics")
             st.rerun()
         else:
             error_msg = result.get("message", result.get("error", result))
